@@ -134,7 +134,10 @@ function getRelationships(serviceName, serviceGUID, hostArray, cursr, relArray) 
         // Build an array of relationships for this service
         // Check the JSON structure is correct, sometimes the entity attribute seems to be missing!
         if (body.data.actor.entity) {
-          let jsn = body.data.actor.entity.relatedEntities.results;
+          let jsn = [];
+          if (body.data.actor.entity.relatedEntities) {
+            jsn = body.data.actor.entity.relatedEntities.results;
+          }
           // Copy the array passed in.
           let relationshipArray = relArray.slice();
           for (let i = 0; i < jsn.length; i++) {
@@ -156,7 +159,7 @@ function getRelationships(serviceName, serviceGUID, hostArray, cursr, relArray) 
             }
           }
           // If we have a nextCursor then we need to recursively call the function
-          if (body.data.actor.entity.relatedEntities.nextCursor) {
+          if (body.data.actor.entity.relatedEntities && body.data.actor.entity.relatedEntities.nextCursor) {
             getRelationships(serviceName, serviceGUID, hostArray, body.data.actor.entity.relatedEntities.nextCursor, relationshipArray);
           } else {
             // We have all the relationships, record if we didn't find any
