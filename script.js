@@ -119,7 +119,7 @@ function processRelationships(serviceName, serviceGUID, hostArray, relationshipA
     // We went through deleting relationships from the relationship array for each host.
     // Any relationships left are old and should be deleted.
     console.log("Deleting relationship for service " + serviceName + ", host guid " + relationshipArray[k]);
-    createDeleteRelationship(hostArray[k].guid, serviceGUID, true);
+    createDeleteRelationship(relationshipArray[k], serviceGUID, true);
   }
 }
 
